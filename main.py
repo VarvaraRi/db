@@ -30,7 +30,7 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route('/add_news', methods=['GET', 'POST'])
+@app.route('/add_drug', methods=['GET', 'POST'])
 def add_news():
     if 'username' not in session:
         return redirect('/login')
@@ -47,7 +47,7 @@ def add_news():
     return render_template('add_drug.html', title='Добавление товара', form=form, username=session['username'])
 
 
-@app.route('/delete_news/<int:drug_id>', methods=['GET'])
+@app.route('/delete_drug/<int:drug_id>', methods=['GET'])
 def delete_news(drug_id):
     if 'username' not in session:
         return redirect('/login')
@@ -107,14 +107,14 @@ def signin():
     return render_template('sign_in.html', title='Регестрация', form=form)
 
 
-@app.route('/addbasket/<int:news_id>', methods=['GET'])
-def addbasket(news_id):
+@app.route('/addbasket/<int:drug_id>', methods=['GET'])
+def addbasket(drug_id):
     if 'username' not in session:
         return redirect('/login')
     bm = BasketModel(db.get_connection())
-    bm.insert(news_id, session['user_id'])
+    bm.insert(drug_id, session['user_id'])
     drug = DrugModel(db.get_connection())
-    drug.update(news_id)
+    drug.update(drug_id)
     return redirect("/index")
 
 
